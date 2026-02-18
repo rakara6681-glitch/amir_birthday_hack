@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Amir - Level Up!</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background: #000;
+      overflow: hidden;
+      font-family: 'Courier New', monospace;
+      color: #0f0;
+      text-align: center;
+    }
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+    .content {
+      position: relative;
+      z-index: 10;
+      padding-top: 15%;
+    }
+    h1 {
+      font-size: 3rem;
+      margin: 20px 0;
+      text-shadow: 0 0 20px #0f0;
+      animation: glow 2s infinite alternate;
+    }
+    p {
+      font-size: 1.2rem;
+      margin: 20px;
+      opacity: 0.9;
+    }
+    .candles {
+      font-size: 4rem;
+      margin: 20px;
+      animation: flicker 3s infinite;
+    }
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #0f0; }
+      to { text-shadow: 0 0 40px #0f0, 0 0 60px #0f0; }
+    }
+    @keyframes flicker {
+      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+      20%, 24%, 55% { opacity: 0.6; }
+    }
+    .secret {
+      display: none;
+      margin-top: 40px;
+      font-size: 1.6rem;
+      color: #ff0;
+      text-shadow: 0 0 20px #ff0;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="matrix"></canvas>
+
+  <div class="content">
+    <div class="candles">🕯️🕯️🕯️🕯️🕯️</div>
+    <h1>تولدت مبارک امیر!</h1>
+    <p>یه سال دیگه لِوِل آپ کردی؛ حالا وقتشه سیستم رو هک کنی و دنیا رو بترکونی 💻🔥</p>
+    <p>همیشه یه لِوِل بالاتر از بقیه بودی — پینگت همیشه پایین! 😎</p>
+
+    <p style="margin-top: 40px; font-size: 1rem;">کد مخفی رو تایپ کن: <b>HACK2026</b></p>
+    <div id="secret" class="secret">
+      🎉 بهترین مدیر سایت و خفن‌ترین رفیق دنیایی!  
+      همیشه بترکون 🖤🚀
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+
+    const matrix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%";
+    const fontSize = 16;
+    const columns = canvas.width / fontSize;
+    const drops = Array(Math.floor(columns)).fill(1);
+
+    function draw() {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = '#0f0';
+      ctx.font = fontSize + 'px monospace';
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = matrix[Math.floor(Math.random() * matrix.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+
+    setInterval(draw, 35);
+
+    let typed = '';
+    document.addEventListener('keydown', (e) => {
+      typed += e.key.toUpperCase();
+      if (typed.length > 8) typed = typed.slice(-8);
+      if (typed === 'HACK2026') {
+        document.getElementById('secret').style.display = 'block';
+        typed = '';
+      }
+    });
+  </script>
+</body>
+</html>
